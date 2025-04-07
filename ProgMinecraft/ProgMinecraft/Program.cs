@@ -36,5 +36,12 @@ namespace ProgMinecraft
             }
             return false;
         }
+        static void stampaQuickInventory()
+        {
+            for(int i = 0; i < nomeMateriale.Length; i++)
+            {
+                Console.WriteLine($"{nomeMateriale[i]} {quantitaMateriale[i]}");
+            }
+        }
     }
 }
