@@ -1,0 +1,5 @@
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.GeneratedMSBuildEditorConfig.editorconfig
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.AssemblyInfoInputs.cache
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.AssemblyInfo.cs
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.csproj.CoreCompileInputs.cache
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.sourcelink.json

@@ -29,8 +29,8 @@ namespace ProgMinecraft
         }
         static bool genSlotInventory(int posMatGen, int quantMatGen, int posInventory)
         {
-            if (!statusMatGen[posMatGen]) 
-            { 
+            if (!statusMatGen[posMatGen])
+            {
                 nomeMateriale[posInventory] = possibiliMaterialiAvvio[posMatGen];
                 quantitaMateriale[posInventory] = quantMatGen;
                 return true;
@@ -39,7 +39,7 @@ namespace ProgMinecraft
         }
         static void stampaQuickInventory()
         {
-            for(int i = 0; i < nomeMateriale.Length; i++)
+            for (int i = 0; i < nomeMateriale.Length; i++)
             {
                 Console.WriteLine($"{nomeMateriale[i]} {quantitaMateriale[i]}");
             }
@@ -54,5 +54,47 @@ namespace ProgMinecraft
                 }
             }
         }
-    }
+        /*static void sortMatrix()
+        {
+            int scambi;
+            do
+            {
+                scambi = 0;
+                for (int i = 0; i < RAW_INVENTARY; i++)
+                {
+                    for (int j = 0; j < COLL_INVENTARY; j++)
+                    {
+                        switch (j)
+                        {
+                            case 9:
+                                if (quantitaMatInv[i + 1, 0] > quantitaMatInv[i, j])
+                                {
+                                    int copia = quantitaMatInv[i, j];
+                                    quantitaMatInv[i, j] = quantitaMatInv[i + 1, 0];
+                                    quantitaMatInv[i + 1, 0] = copia;
+                                    String copiaName = nomeMaterialeInventario[i, j];
+                                    nomeMaterialeInventario[i, j] = nomeMaterialeInventario[i + 1, 0];
+                                    nomeMaterialeInventario[i + 1, 0] = copiaName;
+                                    scambi++;
+                                }
+                                break;
+                            default:
+                                if (quantitaMatInv[i, j + 1] > quantitaMatInv[i, j])
+                                {
+                                    int copia = quantitaMatInv[i, j];
+                                    quantitaMatInv[i, j] = quantitaMatInv[i, j + 1];
+                                    quantitaMatInv[i, j + 1] = copia;
+                                    String copiaName = nomeMaterialeInventario[i, j];
+                                    nomeMaterialeInventario[i, j] = nomeMaterialeInventario[i, j + 1];
+                                    nomeMaterialeInventario[i, j + 1] = copiaName;
+                                    scambi++;
+                                }
+                                break;
+                        }
+                    }
+                }
+            }while (scambi!=0);
+        }*/
+    } 
 }
+
