@@ -16,6 +16,7 @@ namespace ProgMinecraft
         static bool[] statusMatGen = { false, false, false, false, false, false };
         static void Main(string[] args)
         {
+            int scelta;
             Random rand = new Random();
             int matGen = rand.Next(0, 6);
             int quantGen = rand.Next(1, 65);
@@ -28,8 +29,17 @@ namespace ProgMinecraft
             }
             do
             {
-
-            }while (true);
+                stampaMenu();
+                Console.Write("inserisci la tua scelta: ");
+            }while (int.TryParse(Console.ReadLine(),out scelta)&& scelta>0 && scelta<3 );
+        }
+        static void stampaMenu()
+        {
+            Console.WriteLine("--- PROVA LA LOGICA DI MINECRAFT ---");
+            Console.WriteLine("SELEZIONA L'OPERAZIONE CHE VUOI FARE");
+            Console.WriteLine("1. Visualizza il tuo inventario");
+            Console.WriteLine("2. Aggiungi un item al tuo inventario");
+            Console.WriteLine("Qualsiasi tasto: Esci");
         }
         static bool genSlotInventory(int posMatGen, int quantMatGen, int posInventory)
         {
