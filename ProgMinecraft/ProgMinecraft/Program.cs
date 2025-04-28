@@ -11,6 +11,7 @@ namespace ProgMinecraft
         static String[] nomeMateriale = new String[COLL_INVENTARY];
         static int[] quantitaMateriale = new int[COLL_INVENTARY];
         static String[,] nomeMaterialeInventario = new String[RAW_INVENTARY, COLL_INVENTARY];
+        static int[,] quantitaMatInv = new int[RAW_INVENTARY, COLL_INVENTARY];
         static String[] possibiliMaterialiAvvio = { "TRONCO_LEGNO", "COBBLESTONE", "CARBONE", "CARNE_CRUDA", "PATATE", "CAROTE" };
         static bool[] statusMatGen = { false, false, false, false, false, false };
         static void Main(string[] args)
@@ -41,6 +42,16 @@ namespace ProgMinecraft
             for(int i = 0; i < nomeMateriale.Length; i++)
             {
                 Console.WriteLine($"{nomeMateriale[i]} {quantitaMateriale[i]}");
+            }
+        }
+        static void stampaInventory()
+        {
+            for (int i = 0; i < RAW_INVENTARY; i++)
+            {
+                for (int j = 0; j < COLL_INVENTARY; j++)
+                {
+                    Console.WriteLine($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]}");
+                }
             }
         }
     }

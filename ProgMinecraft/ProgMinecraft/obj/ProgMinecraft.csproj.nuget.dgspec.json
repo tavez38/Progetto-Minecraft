@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj": {}
+    "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj": {}
   },
   "projects": {
-    "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj": {
+    "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
+        "projectUniqueName": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
         "projectName": "ProgMinecraft",
-        "projectPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
+        "projectPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
         "packagesPath": "C:\\Users\\alunno\\.nuget\\packages\\",
-        "outputPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\obj\\",
+        "outputPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alunno\\AppData\\Roaming\\NuGet\\NuGet.Config",
