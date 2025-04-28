@@ -26,6 +26,10 @@ namespace ProgMinecraft
                     slotGen++;
                 }
             }
+            do
+            {
+
+            }while (true);
         }
         static bool genSlotInventory(int posMatGen, int quantMatGen, int posInventory)
         {
@@ -51,6 +55,23 @@ namespace ProgMinecraft
                 for (int j = 0; j < COLL_INVENTARY; j++)
                 {
                     Console.WriteLine($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]}");
+                }
+            }
+        }
+        static void addItem(String nomeItem, int quantItem)
+        {
+            bool addedItem = false;
+            for (int i = 0;i < RAW_INVENTARY && !addedItem; i++)
+            {
+                for (int j = 0; j < COLL_INVENTARY; j++)
+                {
+                    if (nomeMaterialeInventario[i, j] == null)
+                    {
+                        nomeMaterialeInventario[i, j] = nomeItem;
+                        quantitaMatInv[i, j] = quantItem;
+                        addedItem = true;
+                        break;
+                    }
                 }
             }
         }
