@@ -3,3 +3,13 @@ T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMin
 T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.AssemblyInfo.cs
 T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.csproj.CoreCompileInputs.cache
 T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.sourcelink.json
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\bin\Debug\net8.0\ProgMinecraft.exe
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\bin\Debug\net8.0\ProgMinecraft.deps.json
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\bin\Debug\net8.0\ProgMinecraft.runtimeconfig.json
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\bin\Debug\net8.0\ProgMinecraft.dll
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\bin\Debug\net8.0\ProgMinecraft.pdb
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.dll
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\refint\ProgMinecraft.dll
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.pdb
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ProgMinecraft.genruntimeconfig.cache
+T:\Tavecchia_Lorenzo\Progetto-Minecraft\Progetto-Minecraft\ProgMinecraft\ProgMinecraft\obj\Debug\net8.0\ref\ProgMinecraft.dll

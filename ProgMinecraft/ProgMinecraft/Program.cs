@@ -7,8 +7,9 @@ namespace ProgMinecraft
     internal class Program
     {
         const int RAW_INVENTARY = 3;
-        const int COLL_INVENTARY = 10;
+        const int COLL_INVENTARY = 9;
         const int MAT_AVVIO = 4;
+        const int MAX_MAT = 64;
         static String[] nomeMateriale = new String[COLL_INVENTARY];
         static int[] quantitaMateriale = new int[COLL_INVENTARY];
         static String[,] nomeMaterialeInventario = new String[RAW_INVENTARY, COLL_INVENTARY];
@@ -89,8 +90,34 @@ namespace ProgMinecraft
         }
         static void addItem(String nomeItem, int quantItem)
         {
+            if (!cercaItem(nomeItem))
+            {
+                addItemFirstFreeSlot(nomeItem, quantItem);
+            }
+            else if (quantitaMatInv[indiceRawRicerca, indiceCollRicerca]==MAX_MAT) 
+            {
+                addItemFirstFreeSlot(nomeItem, quantItem);
+            }
+            else
+            {
+                int somma = quantItem + quantitaMatInv[indiceRawRicerca, indiceCollRicerca];
+                if(somma > MAX_MAT && somma%64==0)
+                {
+                    int numEsecuzioni = somma/64;
+                    quantitaMatInv[indiceRawRicerca, indiceCollRicerca] = 0;
+                    nomeMaterialeInventario[indiceRawRicerca, indiceCollRicerca] = null;
+                    for (int i = 0;i < numEsecuzioni; i++)
+                    {
+                        addItemFirstFreeSlot(nomeItem, 64);
+                    }
+                }
+                //todo
+            }
+        }
+        static bool addItemFirstFreeSlot(String nomeItem, int quantItem)
+        {
             bool addedItem = false;
-            for (int i = 0;i < RAW_INVENTARY && !addedItem; i++)
+            for (int i = 0; i < RAW_INVENTARY && !addedItem; i++)
             {
                 for (int j = 0; j < COLL_INVENTARY; j++)
                 {
@@ -103,6 +130,7 @@ namespace ProgMinecraft
                     }
                 }
             }
+            return addedItem;
         }
         /*static void sortMatrix()
         {
