@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 
 namespace ProgMinecraft
@@ -14,6 +15,8 @@ namespace ProgMinecraft
         static int[,] quantitaMatInv = new int[RAW_INVENTARY, COLL_INVENTARY];
         static String[] possibiliMaterialiAvvio = { "TRONCO_LEGNO", "COBBLESTONE", "CARBONE", "CARNE_CRUDA", "PATATE", "CAROTE" };
         static bool[] statusMatGen = { false, false, false, false, false, false };
+        static int indiceRawRicerca;
+        static int indiceCollRicerca;
         static void Main(string[] args)
         {
             int scelta;
@@ -67,6 +70,22 @@ namespace ProgMinecraft
                     Console.WriteLine($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]}");
                 }
             }
+        }
+        static bool cercaItem(String nomeItem)
+        {
+            for (int i = 0; i < RAW_INVENTARY; i++)
+            {
+                for(int j = 0;j < COLL_INVENTARY; j++)
+                {
+                    if (nomeMaterialeInventario[i, j] == nomeItem)
+                    {
+                        indiceRawRicerca = i;
+                        indiceCollRicerca = j;
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         static void addItem(String nomeItem, int quantItem)
         {
