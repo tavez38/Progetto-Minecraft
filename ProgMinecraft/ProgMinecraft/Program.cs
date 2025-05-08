@@ -16,8 +16,8 @@ namespace ProgMinecraft
         static int[,] quantitaMatInv = new int[RAW_INVENTARY, COLL_INVENTARY];
         static String[] possibiliMaterialiAvvio = { "TRONCO_LEGNO", "COBBLESTONE", "CARBONE", "CARNE_CRUDA", "PATATE", "CAROTE" };
         static bool[] statusMatGen = { false, false, false, false, false, false };
-        static int indiceRawRicerca;
-        static int indiceCollRicerca;
+        static int [] indiciRicerca= new int [64];
+        
         static void Main(string[] args)
         {
             int scelta;
@@ -72,25 +72,38 @@ namespace ProgMinecraft
                 }
             }
         }
-        static bool cercaItem(String nomeItem)
+        static int cercaItem(String nomeItem, int []inxEsc)
         {
-            for (int i = 0; i < RAW_INVENTARY; i++)
+            int []indici=new int[2];
+            int index = 0;
+            bool addedIndex=false;
+            for (int i = 0; i < RAW_INVENTARY && !addedIndex; i++)
             {
                 for(int j = 0;j < COLL_INVENTARY; j++)
                 {
-                    if (nomeMaterialeInventario[i, j] == nomeItem)
+                    if (nomeMaterialeInventario[i, j] == nomeItem && i!=inxEsc1 && j!=inxEsc2)
                     {
-                        indiceRawRicerca = i;
-                        indiceCollRicerca = j;
-                        return true;
+                        indici[index]= i;
+                        indici[index+1] = j;
+                        index+=2;
+                        addedIndex=true;
+                        if (addedIndex)
+                        {
+                            break;
+                        }
                     }
                 }
             }
-            return false;
+            if (addedIndex)
+            {
+                cercaItem(nomeItem, index - 2, index - 1);
+            }
+            return ;
         }
         static void addItem(String nomeItem, int quantItem)
         {
-            if (!cercaItem(nomeItem))
+            int []indici= {-1,-1 };
+            if (!cercaItem(nomeItem, indici))
             {
                 addItemFirstFreeSlot(nomeItem, quantItem);
             }
