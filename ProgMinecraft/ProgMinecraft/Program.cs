@@ -101,17 +101,27 @@ namespace ProgMinecraft
             else
             {
                 int somma = quantItem + quantitaMatInv[indiceRawRicerca, indiceCollRicerca];
-                if(somma > MAX_MAT && somma%64==0)
+                quantitaMatInv[indiceRawRicerca, indiceCollRicerca] = 0;
+                nomeMaterialeInventario[indiceRawRicerca, indiceCollRicerca] = null;
+                if (somma > MAX_MAT && somma%64==0)
                 {
                     int numEsecuzioni = somma/64;
-                    quantitaMatInv[indiceRawRicerca, indiceCollRicerca] = 0;
-                    nomeMaterialeInventario[indiceRawRicerca, indiceCollRicerca] = null;
                     for (int i = 0;i < numEsecuzioni; i++)
                     {
                         addItemFirstFreeSlot(nomeItem, 64);
                     }
                 }
-                //todo
+                else
+                {
+                    int numStack = somma%64;
+                    for (int i = 0; i < numStack; i++)
+                    {
+                        addItemFirstFreeSlot(nomeItem, 64);
+                    }
+                    int quantRimanente = somma - (numStack * 64);
+                    addItemFirstFreeSlot(nomeItem, quantRimanente);
+                }
+                
             }
         }
         static bool addItemFirstFreeSlot(String nomeItem, int quantItem)
