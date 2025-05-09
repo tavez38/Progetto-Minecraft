@@ -45,12 +45,29 @@ namespace ProgMinecraft
                     case 1:
                         sortQuickInventory();
                         sortMatrix();
-                        Console.WriteLine("Inventario veloce");
+                        Console.WriteLine("Inventario veloce \n"); 
                         stampaQuickInventory();
-                        Console.WriteLine("Inventario");
+                        Console.WriteLine("\nInventario");
                         stampaInventory();
                         break;
                     case 2:
+                        int quantItem;
+                        Console.Write("Inserire il nome dell'item: ");
+                        String nomeItem=Console.ReadLine();
+                        Console.Write("Inserire la quantita dell'item: ");
+                        while(!int.TryParse(Console.ReadLine(),out quantItem))
+                        {
+                            Console.WriteLine("Errore, inserire una quantita numerica");
+                        }
+                        bool res=addItem(nomeItem,quantItem);
+                        if (res)
+                        {
+                            Console.WriteLine("Inventario aggiornato");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Errore nell'aggiunta");
+                        } 
                         break;
                     case 3:
                         break;
@@ -74,6 +91,7 @@ namespace ProgMinecraft
             {
                 nomeMateriale[posInventory] = possibiliMaterialiAvvio[posMatGen];
                 quantitaMateriale[posInventory] = quantMatGen;
+                statusMatGen[posMatGen]=true;
                 return true;
             }
             return false;
@@ -84,7 +102,7 @@ namespace ProgMinecraft
             {
                 if (quantitaMateriale[i]!=0)
                 {
-                    Console.WriteLine($"{nomeMateriale[i]} {quantitaMateriale[i]}");
+                    Console.Write($"{nomeMateriale[i]} {quantitaMateriale[i]} \t");
                 }
             }
         }
@@ -96,9 +114,10 @@ namespace ProgMinecraft
                 {
                     if (quantitaMatInv[i, j] != 0)
                     {
-                        Console.WriteLine($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]}");
+                        Console.Write($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]} \t");
                     }
                 }
+                Console.WriteLine("\n");
             }
         }
         static void cercaItemInventory(String nomeItem, int inx1, int inx2 , int indVetInd)
@@ -132,12 +151,14 @@ namespace ProgMinecraft
                 indiciRicerca[i] = -1;
             }
         }
-        static void addItem(String nomeItem, int quantItem)
+        static bool addItem(String nomeItem, int quantItem)
         {
+            bool added = false;
             cercaItemInventory(nomeItem, 0, 0, 0);
             if (indiciRicerca[0]==-1)
             {
                 addItemFirstFreeSlot(nomeItem, quantItem);
+                added = true;
             }
             else  
             {  
@@ -150,15 +171,16 @@ namespace ProgMinecraft
                         nomeMaterialeInventario[i, i+1] = null;
                     }
                 }
-                if (somma > MAX_MAT && somma % 64 == 0)
+                if (somma!=0&&somma > MAX_MAT && somma % 64 == 0)
                 {
                     int numEsecuzioni = somma / 64;
                     for (int i = 0; i < numEsecuzioni; i++)
                     {
                         addItemFirstFreeSlot(nomeItem, 64);
                     }
+                    added = true;
                 }
-                else
+                else if (somma!=0)
                 {
                     int numStack = somma / 64;
                     for (int i = 0; i < numStack; i++)
@@ -167,8 +189,10 @@ namespace ProgMinecraft
                     }
                     int quantRimanente = somma - (numStack * 64);
                     addItemFirstFreeSlot(nomeItem, quantRimanente);
+                    added = true;
                 }
             }
+            return added;
         }
         static bool addItemFirstFreeSlot(String nomeItem, int quantItem)
         {
