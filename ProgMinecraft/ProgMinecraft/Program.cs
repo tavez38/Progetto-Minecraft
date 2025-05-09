@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Net.Http.Headers;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 
@@ -36,6 +37,15 @@ namespace ProgMinecraft
                 stampaMenu();
                 Console.Write("inserisci la tua scelta: ");
             }while (int.TryParse(Console.ReadLine(),out scelta)&& scelta>0 && scelta<3 );
+            switch(scelta){
+                case 1:
+                    
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
         }
         static void stampaMenu()
         {
@@ -74,6 +84,7 @@ namespace ProgMinecraft
         }
         static void cercaItem(String nomeItem, int inx1, int inx2 , int indVetInd)
         {
+            resetVetInd();
             bool addedIndex=false;
             for ( ; inx1 < RAW_INVENTARY && !addedIndex; inx1++)
             {
@@ -93,35 +104,44 @@ namespace ProgMinecraft
             if (addedIndex)
             {
                 cercaItem(nomeItem, inx1--, inx2, indVetInd);
+            }  
+        }
+        static void resetVetInd()
+        {
+            for (int i = 0; i < indiciRicerca.Length; i++)
+            {
+                indiciRicerca[i] = -1;
             }
         }
         static void addItem(String nomeItem, int quantItem)
         {
-            int []indici= {-1,-1 };
-            if (!cercaItem(nomeItem, indici))
+            cercaItem(nomeItem, 0, 0, 0);
+            if (indiciRicerca[0]==-1)
             {
                 addItemFirstFreeSlot(nomeItem, quantItem);
             }
-            else if (quantitaMatInv[indiceRawRicerca, indiceCollRicerca]==MAX_MAT) 
-            {
-                addItemFirstFreeSlot(nomeItem, quantItem);
-            }
-            else
-            {
-                int somma = quantItem + quantitaMatInv[indiceRawRicerca, indiceCollRicerca];
-                quantitaMatInv[indiceRawRicerca, indiceCollRicerca] = 0;
-                nomeMaterialeInventario[indiceRawRicerca, indiceCollRicerca] = null;
-                if (somma > MAX_MAT && somma%64==0)
+            else  
+            {  
+                int somma = 0;
+                for (int i = 0; i < indiciRicerca.Length; i+=2)
                 {
-                    int numEsecuzioni = somma/64;
-                    for (int i = 0;i < numEsecuzioni; i++)
+                    if (indiciRicerca[i] != -1) {
+                        somma += quantitaMatInv[i, i + 1];
+                        quantitaMatInv[i, i+1] = 0;
+                        nomeMaterialeInventario[i, i+1] = null;
+                    }
+                }
+                if (somma > MAX_MAT && somma % 64 == 0)
+                {
+                    int numEsecuzioni = somma / 64;
+                    for (int i = 0; i < numEsecuzioni; i++)
                     {
                         addItemFirstFreeSlot(nomeItem, 64);
                     }
                 }
                 else
                 {
-                    int numStack = somma%64;
+                    int numStack = somma / 64;
                     for (int i = 0; i < numStack; i++)
                     {
                         addItemFirstFreeSlot(nomeItem, 64);
@@ -129,7 +149,6 @@ namespace ProgMinecraft
                     int quantRimanente = somma - (numStack * 64);
                     addItemFirstFreeSlot(nomeItem, quantRimanente);
                 }
-                
             }
         }
         static bool addItemFirstFreeSlot(String nomeItem, int quantItem)
@@ -150,7 +169,7 @@ namespace ProgMinecraft
             }
             return addedItem;
         }
-        /*static void sortMatrix()
+        static void sortMatrix()
         {
             int scambi;
             do
@@ -190,7 +209,23 @@ namespace ProgMinecraft
                     }
                 }
             }while (scambi!=0);
-        }*/
+        }
+        static void sortQuickInventory()
+        {
+            for (int i = 0; i < nomeMateriale.Length - 1; i++) {
+                for (int j = 0; j < nomeMateriale.Length-1-i; j++) { 
+                    if (quantitaMateriale[j] < quantitaMateriale[j + 1])
+                    {
+                        int copia = quantitaMateriale[j];
+                        quantitaMateriale[j]=quantitaMateriale[j + 1];
+                        quantitaMateriale[j+1] = copia;
+                        String copia1 = nomeMateriale[j];
+                        nomeMateriale[j] = nomeMateriale[j + 1];
+                        nomeMateriale[j + 1] = copia1;
+                    }
+                }
+            }
+        }
     } 
 }
 
