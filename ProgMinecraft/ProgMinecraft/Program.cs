@@ -35,17 +35,29 @@ namespace ProgMinecraft
             do
             {
                 stampaMenu();
-                Console.Write("inserisci la tua scelta: ");
-            }while (int.TryParse(Console.ReadLine(),out scelta)&& scelta>0 && scelta<3 );
-            switch(scelta){
-                case 1:
-                    
+                Console.Write("inserisci la tua scelta: "); 
+                if(!int.TryParse(Console.ReadLine(),out scelta))
+                {
                     break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-            }
+                }
+                switch (scelta)
+                {
+                    case 1:
+                        sortQuickInventory();
+                        sortMatrix();
+                        Console.WriteLine("Inventario veloce");
+                        stampaQuickInventory();
+                        Console.WriteLine("Inventario");
+                        stampaInventory();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    default:
+                        break;
+                }
+            } while (scelta > 0 && scelta < 4);
         }
         static void stampaMenu()
         {
@@ -53,6 +65,7 @@ namespace ProgMinecraft
             Console.WriteLine("SELEZIONA L'OPERAZIONE CHE VUOI FARE");
             Console.WriteLine("1. Visualizza il tuo inventario");
             Console.WriteLine("2. Aggiungi un item al tuo inventario");
+            Console.WriteLine("3. Cerca un item nel tuo inventario");
             Console.WriteLine("Qualsiasi tasto: Esci");
         }
         static bool genSlotInventory(int posMatGen, int quantMatGen, int posInventory)
@@ -69,7 +82,10 @@ namespace ProgMinecraft
         {
             for (int i = 0; i < nomeMateriale.Length; i++)
             {
-                Console.WriteLine($"{nomeMateriale[i]} {quantitaMateriale[i]}");
+                if (quantitaMateriale[i]!=0)
+                {
+                    Console.WriteLine($"{nomeMateriale[i]} {quantitaMateriale[i]}");
+                }
             }
         }
         static void stampaInventory()
@@ -78,11 +94,14 @@ namespace ProgMinecraft
             {
                 for (int j = 0; j < COLL_INVENTARY; j++)
                 {
-                    Console.WriteLine($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]}");
+                    if (quantitaMatInv[i, j] != 0)
+                    {
+                        Console.WriteLine($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]}");
+                    }
                 }
             }
         }
-        static void cercaItem(String nomeItem, int inx1, int inx2 , int indVetInd)
+        static void cercaItemInventory(String nomeItem, int inx1, int inx2 , int indVetInd)
         {
             resetVetInd();
             bool addedIndex=false;
@@ -103,7 +122,7 @@ namespace ProgMinecraft
             }
             if (addedIndex)
             {
-                cercaItem(nomeItem, inx1--, inx2, indVetInd);
+                cercaItemInventory(nomeItem, inx1--, inx2, indVetInd);
             }  
         }
         static void resetVetInd()
@@ -115,7 +134,7 @@ namespace ProgMinecraft
         }
         static void addItem(String nomeItem, int quantItem)
         {
-            cercaItem(nomeItem, 0, 0, 0);
+            cercaItemInventory(nomeItem, 0, 0, 0);
             if (indiciRicerca[0]==-1)
             {
                 addItemFirstFreeSlot(nomeItem, quantItem);
@@ -181,8 +200,12 @@ namespace ProgMinecraft
                     {
                         switch (j)
                         {
-                            case 9:
-                                if (quantitaMatInv[i + 1, 0] > quantitaMatInv[i, j])
+                            case 8:
+                                if (i == 2)
+                                {
+                                    break;
+                                }
+                                else if (quantitaMatInv[i + 1, 0] > quantitaMatInv[i, j])
                                 {
                                     int copia = quantitaMatInv[i, j];
                                     quantitaMatInv[i, j] = quantitaMatInv[i + 1, 0];
