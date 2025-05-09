@@ -23,10 +23,10 @@ namespace ProgMinecraft
         {
             int scelta;
             Random rand = new Random();
-            int matGen = rand.Next(0, 6);
-            int quantGen = rand.Next(1, 65);
             int slotGen = 0;
             while (slotGen < MAT_AVVIO) {
+                int matGen = rand.Next(0, 6);
+                int quantGen = rand.Next(1, 65);
                 bool res = genSlotInventory(matGen, quantGen, slotGen);
                 if (res) {
                     slotGen++;
