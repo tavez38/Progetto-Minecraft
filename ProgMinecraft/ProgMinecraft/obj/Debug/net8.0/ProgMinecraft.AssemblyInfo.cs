@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProgMinecraft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9be6a5d0656883c0ffde309b3d362c46b65feb82")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb0ef3b40f860a191d9b7d30bb4cdb65e2e730ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProgMinecraft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProgMinecraft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

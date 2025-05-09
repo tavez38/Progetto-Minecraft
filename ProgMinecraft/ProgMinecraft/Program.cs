@@ -72,33 +72,28 @@ namespace ProgMinecraft
                 }
             }
         }
-        static int cercaItem(String nomeItem, int []inxEsc)
+        static void cercaItem(String nomeItem, int inx1, int inx2 , int indVetInd)
         {
-            int []indici=new int[2];
-            int index = 0;
             bool addedIndex=false;
-            for (int i = 0; i < RAW_INVENTARY && !addedIndex; i++)
+            for ( ; inx1 < RAW_INVENTARY && !addedIndex; inx1++)
             {
-                for(int j = 0;j < COLL_INVENTARY; j++)
+                for( ; inx2 < COLL_INVENTARY; inx2++)
                 {
-                    if (nomeMaterialeInventario[i, j] == nomeItem && i!=inxEsc1 && j!=inxEsc2)
+                    if (nomeMaterialeInventario[inx1, inx2] == nomeItem)
                     {
-                        indici[index]= i;
-                        indici[index+1] = j;
-                        index+=2;
+                        indiciRicerca[indVetInd] = inx1;
+                        indiciRicerca[indVetInd+1] = inx2;
+                        indVetInd +=2;
                         addedIndex=true;
-                        if (addedIndex)
-                        {
-                            break;
-                        }
+                        break;
+                        
                     }
                 }
             }
             if (addedIndex)
             {
-                cercaItem(nomeItem, index - 2, index - 1);
+                cercaItem(nomeItem, inx1--, inx2, indVetInd);
             }
-            return ;
         }
         static void addItem(String nomeItem, int quantItem)
         {
