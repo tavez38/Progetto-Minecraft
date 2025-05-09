@@ -141,7 +141,7 @@ namespace ProgMinecraft
             }
             if (addedIndex)
             {
-                cercaItemInventory(nomeItem, inx1--, inx2, indVetInd);
+                cercaItemInventory(nomeItem, inx1, inx2++, indVetInd);
             }  
         }
         static void resetVetInd()
