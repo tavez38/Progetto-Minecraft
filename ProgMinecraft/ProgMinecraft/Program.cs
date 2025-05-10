@@ -17,11 +17,13 @@ namespace ProgMinecraft
         static int[,] quantitaMatInv = new int[RAW_INVENTARY, COLL_INVENTARY];
         static String[] possibiliMaterialiAvvio = { "TRONCO_LEGNO", "COBBLESTONE", "CARBONE", "CARNE_CRUDA", "PATATE", "CAROTE" };
         static bool[] statusMatGen = { false, false, false, false, false, false };
-        static int [] indiciRicerca= new int [64];
+        static int [] indiciRicerca= new int [54];
         
         static void Main(string[] args)
         {
             int scelta;
+            String nomeItem;
+            
             Random rand = new Random();
             int slotGen = 0;
             while (slotGen < MAT_AVVIO) {
@@ -32,6 +34,7 @@ namespace ProgMinecraft
                     slotGen++;
                 }
             }
+            Console.WriteLine("--- PROVA LA LOGICA DI MINECRAFT ---");
             do
             {
                 stampaMenu();
@@ -43,6 +46,7 @@ namespace ProgMinecraft
                 switch (scelta)
                 {
                     case 1:
+                        Console.Clear();
                         sortQuickInventory();
                         sortMatrix();
                         Console.WriteLine("Inventario veloce \n"); 
@@ -51,9 +55,10 @@ namespace ProgMinecraft
                         stampaInventory();
                         break;
                     case 2:
+                        Console.Clear();
                         int quantItem;
                         Console.Write("Inserire il nome dell'item: ");
-                        String nomeItem=Console.ReadLine();
+                        nomeItem=Console.ReadLine();
                         Console.Write("Inserire la quantita dell'item: ");
                         while(!int.TryParse(Console.ReadLine(),out quantItem))
                         {
@@ -71,6 +76,37 @@ namespace ProgMinecraft
                         } 
                         break;
                     case 3:
+                        int somma = 0;
+                        Console.Clear();
+                        Console.Write("Inserire il nome dell'item: ");
+                        nomeItem = Console.ReadLine();
+                        resetVetInd();
+                        int indiceQuickInv=searchQuickInv(nomeItem.ToUpper());
+                        cercaItemInventory(nomeItem.ToUpper(),0);
+                        if (indiceQuickInv != -1)
+                        {
+                            somma += quantitaMateriale[indiceQuickInv];
+                        }
+                        if (indiciRicerca[0] != -1)
+                        {
+                            for(int i = 0; i < indiciRicerca.Length; i += 2)
+                            {
+                                if (indiciRicerca[i] != -1)
+                                {
+                                    int ind1 = indiciRicerca[i];
+                                    int ind2 = indiciRicerca[i + 1];
+                                    somma += quantitaMatInv[ind1, ind2];
+                                }
+                            }
+                        }
+                        if (somma != 0)
+                        {
+                            Console.WriteLine($"Al momento hai {somma} unita di {nomeItem}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Al momento non hai unita di {nomeItem}");
+                        }
                         break;
                     default:
                         break;
@@ -79,7 +115,7 @@ namespace ProgMinecraft
         }
         static void stampaMenu()
         {
-            Console.WriteLine("--- PROVA LA LOGICA DI MINECRAFT ---");
+            
             Console.WriteLine("SELEZIONA L'OPERAZIONE CHE VUOI FARE");
             Console.WriteLine("1. Visualizza il tuo inventario");
             Console.WriteLine("2. Aggiungi un item al tuo inventario");
@@ -121,14 +157,16 @@ namespace ProgMinecraft
                 Console.WriteLine("\n");
             }
         }
-        static void cercaItemInventory(String nomeItem, int inx1, int inx2 , int indVetInd)
+        static void cercaItemInventory(String nomeItem, int indVetInd)
         {
-            bool sameIndexs=false;
+            bool sameIndexs;
             bool addedIndex=false;
-            for (int i=0 ; i < RAW_INVENTARY && !addedIndex; i++)
+            int i=0, j=0;
+            for (; i < RAW_INVENTARY && !addedIndex; i++)
             {
-                for(int j=0 ; j < COLL_INVENTARY; j++)
+                for(; j < COLL_INVENTARY; j++)
                 {
+                    sameIndexs = false;
                     for(int k=0; k<indiciRicerca.Length; k+=2)
                     {
                         if (i == indiciRicerca[k] && j == indiciRicerca[k + 1])
@@ -152,18 +190,9 @@ namespace ProgMinecraft
                     }
                 }
             }
-            if (addedIndex && !(inx2 == 8 && inx1==3))
+            if (addedIndex && !(j == 8 && i==3))
             {
-                if(inx2 == 8)
-                {
-                    cercaItemInventory(nomeItem, inx1, 0, indVetInd);
-                }
-                else
-                {
-                    inx1 --;
-                    inx2++;
-                    cercaItemInventory(nomeItem,inx1,inx2, indVetInd);
-                }
+                cercaItemInventory(nomeItem, indVetInd);    
             }  
         }
         static void resetVetInd()
@@ -176,7 +205,7 @@ namespace ProgMinecraft
         static bool addItem(String nomeItem, int quantItem)
         {
             bool added = false;
-            cercaItemInventory(nomeItem, 0, 0, 0);
+            cercaItemInventory(nomeItem, 0);
             if (indiciRicerca[0]==-1)
             {
                 addItemFirstFreeSlot(nomeItem, quantItem);
@@ -185,12 +214,13 @@ namespace ProgMinecraft
             else  
             {  
                 int somma = 0;
+                somma += quantItem;
                 for (int i = 0; i < indiciRicerca.Length; i+=2)
                 {
                     if (indiciRicerca[i] != -1) {
                         int ind1=indiciRicerca[i];
                         int ind2=indiciRicerca[i+1];
-                        somma = somma+ quantitaMatInv[ind1, ind2]+quantItem;
+                        somma = somma+ quantitaMatInv[ind1, ind2];
                         quantitaMatInv[ind1, ind2] = 0;
                         nomeMaterialeInventario[ind1, ind2] = null;
                     }
@@ -206,7 +236,8 @@ namespace ProgMinecraft
                 }
                 else if (somma!=0)
                 {
-                    int numStack = somma / 64;
+                    int numStack;
+                    numStack= (int)(somma / 64);
                     for (int i = 0; i < numStack; i++)
                     {
                         addItemFirstFreeSlot(nomeItem, 64);
@@ -296,6 +327,17 @@ namespace ProgMinecraft
                     }
                 }
             }
+        }
+        static int searchQuickInv(String nomeItem)
+        {
+            for (int i = 0; i < nomeMateriale.Length; i++)
+            {
+                if (nomeMateriale[i] == nomeItem)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     } 
 }
