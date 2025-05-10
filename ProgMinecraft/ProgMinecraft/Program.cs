@@ -59,7 +59,8 @@ namespace ProgMinecraft
                         {
                             Console.WriteLine("Errore, inserire una quantita numerica");
                         }
-                        bool res=addItem(nomeItem,quantItem);
+                        resetVetInd();
+                        bool res=addItem(nomeItem.ToUpper(),quantItem);
                         if (res)
                         {
                             Console.WriteLine("Inventario aggiornato");
@@ -122,16 +123,28 @@ namespace ProgMinecraft
         }
         static void cercaItemInventory(String nomeItem, int inx1, int inx2 , int indVetInd)
         {
-            resetVetInd();
+            bool sameIndexs=false;
             bool addedIndex=false;
-            for ( ; inx1 < RAW_INVENTARY && !addedIndex; inx1++)
+            for (int i=0 ; i < RAW_INVENTARY && !addedIndex; i++)
             {
-                for( ; inx2 < COLL_INVENTARY; inx2++)
+                for(int j=0 ; j < COLL_INVENTARY; j++)
                 {
-                    if (nomeMaterialeInventario[inx1, inx2] == nomeItem)
+                    for(int k=0; k<indiciRicerca.Length; k+=2)
                     {
-                        indiciRicerca[indVetInd] = inx1;
-                        indiciRicerca[indVetInd+1] = inx2;
+                        if (i == indiciRicerca[k] && j == indiciRicerca[k + 1])
+                        {
+                            sameIndexs=true;
+                            break;
+                        }
+                    }
+                    if (sameIndexs)
+                    {
+                        continue;
+                    }
+                    else if (nomeMaterialeInventario[i, j] == nomeItem)
+                    {
+                        indiciRicerca[indVetInd] = i;
+                        indiciRicerca[indVetInd+1] = j;
                         indVetInd +=2;
                         addedIndex=true;
                         break;
@@ -139,9 +152,18 @@ namespace ProgMinecraft
                     }
                 }
             }
-            if (addedIndex)
+            if (addedIndex && !(inx2 == 8 && inx1==3))
             {
-                cercaItemInventory(nomeItem, inx1, inx2++, indVetInd);
+                if(inx2 == 8)
+                {
+                    cercaItemInventory(nomeItem, inx1, 0, indVetInd);
+                }
+                else
+                {
+                    inx1 --;
+                    inx2++;
+                    cercaItemInventory(nomeItem,inx1,inx2, indVetInd);
+                }
             }  
         }
         static void resetVetInd()
@@ -166,9 +188,11 @@ namespace ProgMinecraft
                 for (int i = 0; i < indiciRicerca.Length; i+=2)
                 {
                     if (indiciRicerca[i] != -1) {
-                        somma += quantitaMatInv[i, i + 1];
-                        quantitaMatInv[i, i+1] = 0;
-                        nomeMaterialeInventario[i, i+1] = null;
+                        int ind1=indiciRicerca[i];
+                        int ind2=indiciRicerca[i+1];
+                        somma = somma+ quantitaMatInv[ind1, ind2]+quantItem;
+                        quantitaMatInv[ind1, ind2] = 0;
+                        nomeMaterialeInventario[ind1, ind2] = null;
                     }
                 }
                 if (somma!=0&&somma > MAX_MAT && somma % 64 == 0)

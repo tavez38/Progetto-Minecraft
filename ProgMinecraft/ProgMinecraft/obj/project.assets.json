@@ -8,19 +8,24 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\alunno\\.nuget\\packages\\": {}
+    "C:\\Users\\LORENZO\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
+      "projectUniqueName": "C:\\Users\\LORENZO\\Desktop\\scuola\\inf\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
       "projectName": "ProgMinecraft",
-      "projectPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
-      "packagesPath": "C:\\Users\\alunno\\.nuget\\packages\\",
-      "outputPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\obj\\",
+      "projectPath": "C:\\Users\\LORENZO\\Desktop\\scuola\\inf\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
+      "packagesPath": "C:\\Users\\LORENZO\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LORENZO\\Desktop\\scuola\\inf\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\alunno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LORENZO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -66,7 +71,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

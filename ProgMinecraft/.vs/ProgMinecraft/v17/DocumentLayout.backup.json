@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\",
+  "WorkspaceRootPath": "C:\\Users\\LORENZO\\Desktop\\scuola\\inf\\Progetto-Minecraft\\ProgMinecraft\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{747AED59-8FA7-4178-BF59-3C90F3075C88}|ProgMinecraft\\ProgMinecraft.csproj|t:\\tavecchia_lorenzo\\progetto-minecraft\\progminecraft\\progminecraft\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{747AED59-8FA7-4178-BF59-3C90F3075C88}|ProgMinecraft\\ProgMinecraft.csproj|c:\\users\\lorenzo\\desktop\\scuola\\inf\\progetto-minecraft\\progminecraft\\progminecraft\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{747AED59-8FA7-4178-BF59-3C90F3075C88}|ProgMinecraft\\ProgMinecraft.csproj|solutionrelative:progminecraft\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\LORENZO\\Desktop\\scuola\\inf\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\Program.cs",
               "RelativeDocumentMoniker": "ProgMinecraft\\Program.cs",
-              "ToolTip": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\Program.cs",
+              "ToolTip": "C:\\Users\\LORENZO\\Desktop\\scuola\\inf\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\Program.cs",
               "RelativeToolTip": "ProgMinecraft\\Program.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAcwD0AAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAHsAAAAAAAAAAIA/wI8AAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-07T13:07:39.447Z",
               "IsPinned": true,
