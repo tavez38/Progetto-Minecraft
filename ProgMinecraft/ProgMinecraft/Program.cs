@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
 using System.Net.Http.Headers;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
@@ -11,6 +12,9 @@ namespace ProgMinecraft
         const int COLL_INVENTARY = 9;
         const int MAT_AVVIO = 4;
         const int MAX_MAT = 64;
+        const int NEED_ASSI = 2;
+        const int NEED_STICK = 1;
+        const int NEED_CARBONE = 1;
         static String[] nomeMateriale = new String[COLL_INVENTARY];
         static int[] quantitaMateriale = new int[COLL_INVENTARY];
         static String[,] nomeMaterialeInventario = new String[RAW_INVENTARY, COLL_INVENTARY];
@@ -18,6 +22,7 @@ namespace ProgMinecraft
         static String[] possibiliMaterialiAvvio = { "TRONCO_LEGNO", "COBBLESTONE", "CARBONE", "CARNE_CRUDA", "PATATE", "CAROTE" };
         static bool[] statusMatGen = { false, false, false, false, false, false };
         static int [] indiciRicerca= new int [54];
+
         
         static void Main(string[] args)
         {
@@ -57,7 +62,7 @@ namespace ProgMinecraft
                     case 2:
                         Console.Clear();
                         int quantItem;
-                        Console.Write("Inserire il nome dell'item: ");
+                        Console.Write("Inserire il nome dell'item (se esso è composto da piu parole separarle con _, non inserire articoli e/o preposizioni e inserire il nome al singolare: ex. asse e non assi): ");
                         nomeItem=Console.ReadLine();
                         Console.Write("Inserire la quantita dell'item: ");
                         while(!int.TryParse(Console.ReadLine(),out quantItem))
@@ -89,15 +94,7 @@ namespace ProgMinecraft
                         }
                         if (indiciRicerca[0] != -1)
                         {
-                            for(int i = 0; i < indiciRicerca.Length; i += 2)
-                            {
-                                if (indiciRicerca[i] != -1)
-                                {
-                                    int ind1 = indiciRicerca[i];
-                                    int ind2 = indiciRicerca[i + 1];
-                                    somma += quantitaMatInv[ind1, ind2];
-                                }
-                            }
+                            somma = calcSommaInv();
                         }
                         if (somma != 0)
                         {
@@ -108,10 +105,116 @@ namespace ProgMinecraft
                             Console.WriteLine($"Al momento non hai unita di {nomeItem}");
                         }
                         break;
+                    case 4:
+                        bool craft = false;
+                        bool addInv=false;
+                        int sceltaCraft;
+                        String confCraft;
+                        Console.WriteLine("Seleziona il craft che vuoi fare");
+                        Console.WriteLine("1. Stick di legno");
+                        Console.WriteLine("2. Torcia");
+                        Console.WriteLine("Qualsiasi tasto per annullare");
+                        Console.WriteLine("Scegli il craft");
+                        if(!int.TryParse(Console.ReadLine(), out sceltaCraft) || sceltaCraft>=3 || sceltaCraft <= 0)
+                        {
+                            break;
+                        }
+                        switch (sceltaCraft)
+                        {
+                            
+                            case 1:
+                                resetVetInd();
+                                Console.WriteLine("Materiale occorente: 2x ASSI_LEGNO");
+                                cercaItemInventory("ASSE_LEGNO", 0);
+                                int indexAssi=searchQuickInv("ASSE_LEGNO");
+                                if (indiciRicerca[0] == -1 && indexAssi==-1)
+                                {
+                                    Console.WriteLine("Al momento non hai i materiali necessari");
+                                }
+                                else
+                                {
+                                    int sommaAssi = 0;
+                                    if (indexAssi != -1)
+                                    {
+                                        sommaAssi += quantitaMateriale[indexAssi];
+                                    }
+                                     sommaAssi+=calcSommaInv();
+                                    Console.WriteLine($"Al momento possiedi {sommaAssi} ASSE_LEGNO");
+                                    if(sommaAssi>= NEED_ASSI)
+                                    {
+                                        Console.WriteLine("Quanti stick vuoi craftare?");
+                                        if(!int.TryParse(Console.ReadLine(),out int quant))
+                                        {
+                                            break;
+                                        }
+                                        Console.WriteLine("Vuoi procedere con il craft? (S/qualsiasi tasto per annullare)");
+                                        confCraft=Console.ReadLine();
+                                        if (confCraft.ToUpper() == "S")
+                                        {
+                                            addInv=craftStick(sommaAssi, quant);
+                                            craft = true;
+                                        }
+                                        else 
+                                        {
+                                            Console.WriteLine("Uscita in corso...");
+                                        }
+                                        
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Impossibile procedere con il craf, non possiedi abbastanza materiali");
+                                    }
+                                    if (addInv)
+                                    {
+                                        Console.WriteLine("craft eseguito; controlla l'inventario");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("craft eseguito; item non aggiunto all'inventario");
+                                    }
+                                }
+                                break;
+                            case 2:
+                                
+                                break;
+                        }
+                        break;
                     default:
                         break;
                 }
-            } while (scelta > 0 && scelta < 4);
+            } while (scelta > 0 && scelta < 5);
+        }
+        static bool craftStick(int sommaMax, int quant)
+        {
+            int maxRimanenti = sommaMax - (quant*NEED_ASSI);
+            for (int i = 0; i < indiciRicerca.Length; i += 2)
+            {
+                if (indiciRicerca[i] != -1)
+                {
+                    int ind1 = indiciRicerca[i];
+                    int ind2 = indiciRicerca[i + 1];
+                    quantitaMatInv[ind1, ind2] = 0;
+                    nomeMaterialeInventario[ind1, ind2] = null;
+                }
+            }
+            addItemNotStack(maxRimanenti,"ASSI_LEGNO");
+            resetVetInd();
+            return addItem("STICK_LEGNO", quant);
+             
+        }
+        static int calcSommaInv()
+        {
+            int somma = 0;
+            for (int i = 0; i < indiciRicerca.Length; i += 2)
+            {
+                if (indiciRicerca[i] != -1)
+                {
+                    int ind1 = indiciRicerca[i];
+                    int ind2 = indiciRicerca[i + 1];
+                    somma += quantitaMatInv[ind1, ind2];
+                }
+            }
+            return somma;
         }
         static void stampaMenu()
         {
@@ -120,6 +223,7 @@ namespace ProgMinecraft
             Console.WriteLine("1. Visualizza il tuo inventario");
             Console.WriteLine("2. Aggiungi un item al tuo inventario");
             Console.WriteLine("3. Cerca un item nel tuo inventario");
+            Console.WriteLine("4. Crafta un oggetto");
             Console.WriteLine("Qualsiasi tasto: Esci");
         }
         static bool genSlotInventory(int posMatGen, int quantMatGen, int posInventory)
@@ -208,8 +312,8 @@ namespace ProgMinecraft
             cercaItemInventory(nomeItem, 0);
             if (indiciRicerca[0]==-1)
             {
-                addItemFirstFreeSlot(nomeItem, quantItem);
-                added = true;
+               added = addItemFirstFreeSlot(nomeItem, quantItem);
+                
             }
             else  
             {  
@@ -225,29 +329,26 @@ namespace ProgMinecraft
                         nomeMaterialeInventario[ind1, ind2] = null;
                     }
                 }
-                if (somma!=0&&somma > MAX_MAT && somma % 64 == 0)
-                {
-                    int numEsecuzioni = somma / 64;
-                    for (int i = 0; i < numEsecuzioni; i++)
-                    {
-                        addItemFirstFreeSlot(nomeItem, 64);
-                    }
-                    added = true;
-                }
-                else if (somma!=0)
-                {
-                    int numStack;
-                    numStack= (int)(somma / 64);
-                    for (int i = 0; i < numStack; i++)
-                    {
-                        addItemFirstFreeSlot(nomeItem, 64);
-                    }
-                    int quantRimanente = somma - (numStack * 64);
-                    addItemFirstFreeSlot(nomeItem, quantRimanente);
-                    added = true;
-                }
+                added=addItemNotStack(somma, nomeItem);
+                                
             }
             return added;
+        }
+        static bool addItemNotStack(int somma, String nomeItem)
+        {
+            int numStack;
+            bool res=false;
+            numStack = (int)(somma / 64);
+            for (int i = 0; i < numStack; i++)
+            {
+                res=addItemFirstFreeSlot(nomeItem, 64);
+            }
+            int quantRimanente = somma - (numStack * 64);
+            if (quantRimanente > 0)
+            {
+                res=addItemFirstFreeSlot(nomeItem, quantRimanente);
+            }
+            return res;
         }
         static bool addItemFirstFreeSlot(String nomeItem, int quantItem)
         {
