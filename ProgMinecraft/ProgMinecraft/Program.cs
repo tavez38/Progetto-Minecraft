@@ -175,8 +175,9 @@ namespace ProgMinecraft
                                 }
                                 break;
                             case 2:
-                                
+                                //funz craft torcia
                                 break;
+                            default: break;
                         }
                         break;
                     default:
