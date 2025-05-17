@@ -106,7 +106,7 @@ namespace ProgMinecraft
                         }
                         break;
                     case 4:
-                        bool craft = false;
+                        Console.Clear();
                         bool addInv=false;
                         int sceltaCraft;
                         String confCraft;
@@ -123,6 +123,7 @@ namespace ProgMinecraft
                         {
                             
                             case 1:
+                                Console.Clear();
                                 resetVetInd();
                                 Console.WriteLine("Materiale occorente: 2x ASSI_LEGNO");
                                 cercaItemInventory("ASSE_LEGNO", 0);
@@ -147,12 +148,28 @@ namespace ProgMinecraft
                                         {
                                             break;
                                         }
+                                        if (sommaAssi < (NEED_ASSI * quant))
+                                        {
+                                            Console.WriteLine($"impossibile craftare {quant} stick; materiali insufficienti");
+                                            break;
+                                        }
                                         Console.WriteLine("Vuoi procedere con il craft? (S/qualsiasi tasto per annullare)");
                                         confCraft=Console.ReadLine();
                                         if (confCraft.ToUpper() == "S")
                                         {
-                                            addInv=craftStick(sommaAssi, quant);
-                                            craft = true;
+                                            if (indexAssi != -1)
+                                            {
+                                                svuotaQuickInv(indexAssi);
+                                            }
+                                            addInv =craftStick(sommaAssi, quant);
+                                            if (addInv)
+                                            {
+                                                Console.WriteLine("craft eseguito; controlla l'inventario");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("craft eseguito; item non aggiunto all'inventario");
+                                            }
                                         }
                                         else 
                                         {
@@ -164,18 +181,97 @@ namespace ProgMinecraft
                                     {
                                         Console.WriteLine("Impossibile procedere con il craf, non possiedi abbastanza materiali");
                                     }
-                                    if (addInv)
-                                    {
-                                        Console.WriteLine("craft eseguito; controlla l'inventario");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("craft eseguito; item non aggiunto all'inventario");
-                                    }
+                                    
                                 }
                                 break;
                             case 2:
-                                //funz craft torcia
+                                Console.Clear();
+                                int sommaStick = 0;
+                                int sommaCarbone = 0;
+                                resetVetInd();
+                                Console.WriteLine("Materiale occorrente: 1x CARBONE, 1x STICK_LEGNO");
+                                cercaItemInventory("STICK_LEGNO", 0);
+                                int indexStick = searchQuickInv("STICK_LEGNO");
+                                if (indiciRicerca[0] == -1 && indexStick == -1)
+                                {
+                                    Console.WriteLine("Al momento non hai degli STICK_LEGNO");
+                                    Console.WriteLine("Impossibile eseguire il craft");
+                                }
+                                else
+                                {  
+                                    if (indexStick != -1)
+                                    {
+                                        sommaStick += quantitaMateriale[indexStick];    
+                                    }
+                                    sommaStick += calcSommaInv();
+                                    resetVetInd();
+                                    cercaItemInventory("CARBONE", 0);
+                                    int indexCarbone = searchQuickInv("CARBONE");
+                                    if (indiciRicerca[0] == -1 && indexCarbone == -1)
+                                    {
+                                        Console.WriteLine("Al momento non hai il CARBONE");
+                                        Console.WriteLine("Impossibile eseguire il craft");
+                                        break;
+                                    }
+                                    else 
+                                    {
+                                        if (indexCarbone != -1)
+                                        {
+                                            sommaCarbone += quantitaMateriale[indexCarbone];
+                                        }
+                                        sommaCarbone += calcSommaInv();
+                                    }
+                                    Console.WriteLine($"Al momento possiedi: \n{sommaStick} unita di STICK_LEGNO\n{sommaCarbone} unita di CARBONE");
+                                    if(sommaCarbone>NEED_CARBONE && sommaStick > NEED_STICK)
+                                    {
+                                        Console.WriteLine("Inserire la quantita di torce da craftare: ");
+                                        if (!int.TryParse(Console.ReadLine(), out int quantTorce))
+                                        {
+                                            Console.WriteLine("Impossibile procedere, la quantita deve essere numerica");
+                                            break;
+                                        }
+                                        if(sommaStick < (NEED_STICK*quantTorce) && sommaCarbone < (NEED_CARBONE * quantTorce))
+                                        {
+                                            Console.WriteLine($"impossibile craftare {quantTorce} torce; materiali insufficienti");
+                                            break;
+                                        }
+                                        Console.WriteLine("Vuoi procedere con il craft? (S/qualsiasi tasto per annullare)");
+                                        confCraft = Console.ReadLine();
+                                        if (confCraft.ToUpper() == "S")
+                                        {
+                                            if (indexStick != -1)
+                                            {
+                                                svuotaQuickInv(indexStick);
+                                            }
+                                            if (indexCarbone != -1)
+                                            {
+                                                svuotaQuickInv(indexCarbone);
+                                            }
+                                            svuotaInvRicerca(); //svuotamento celle contenenti il carbone x redistribuzione
+                                            resetVetInd();//pulizia vettore ricerca indici
+                                            cercaItemInventory("STICK_LEGNO", 0);//caricamento vettore indici con indici degli stick
+                                            svuotaInvRicerca(); //svuotamento celle contenenti stick x redistribuzione
+                                            addInv = craftTorcia(sommaStick, sommaCarbone, quantTorce);
+                                            if (addInv)
+                                            {
+                                                Console.WriteLine("craft eseguito; controlla l'inventario");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("craft eseguito; item non aggiunto all'inventario");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Uscita in corso...");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Impossibile eseguire il craft");
+                                    }
+                                    
+                                }
                                 break;
                             default: break;
                         }
@@ -185,9 +281,13 @@ namespace ProgMinecraft
                 }
             } while (scelta > 0 && scelta < 5);
         }
-        static bool craftStick(int sommaMax, int quant)
+        static void svuotaQuickInv(int index)
         {
-            int maxRimanenti = sommaMax - (quant*NEED_ASSI);
+            quantitaMateriale[index] = 0;
+            nomeMateriale[index] = null;
+        }
+        static void svuotaInvRicerca()//funzione eseguita SOLAMENTE quando e necessaria una redistribuzione dei materiali per cui bisogna svuotare le caselle contenenti esso dopo aver calcolato la somma di quanto se ne possiede
+        {
             for (int i = 0; i < indiciRicerca.Length; i += 2)
             {
                 if (indiciRicerca[i] != -1)
@@ -198,7 +298,31 @@ namespace ProgMinecraft
                     nomeMaterialeInventario[ind1, ind2] = null;
                 }
             }
-            addItemNotStack(maxRimanenti,"ASSI_LEGNO");
+        }
+        static bool craftTorcia(int sommaStick, int sommaCoal, int quant)
+        {
+            int stickRimanenti = sommaStick - (quant * NEED_STICK);
+            int coalRimanente = sommaCoal - (quant * NEED_CARBONE);
+            if (stickRimanenti > 0)
+            {
+                addItemNotStack(stickRimanenti, "STICK_LEGNO");
+            }
+            if (coalRimanente > 0)
+            {
+                addItemNotStack(coalRimanente, "CARBONE");
+            }
+            resetVetInd();
+            return addItem("TORCIA", quant);
+
+        }
+        static bool craftStick(int sommaMax, int quant)
+        {
+            int maxRimanenti = sommaMax - (quant*NEED_ASSI);
+            svuotaInvRicerca();
+            if (maxRimanenti > 0) 
+            {
+                addItemNotStack(maxRimanenti, "ASSI_LEGNO"); 
+            }
             resetVetInd();
             return addItem("STICK_LEGNO", quant);
              
