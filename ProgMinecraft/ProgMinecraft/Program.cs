@@ -437,7 +437,7 @@ namespace ProgMinecraft
             cercaItemInventory(nomeItem, 0);
             if (indiciRicerca[0]==-1)
             {
-               added = addItemFirstFreeSlot(nomeItem, quantItem);
+               added = addItemNotStack(quantItem, nomeItem);
                 
             }
             else  
