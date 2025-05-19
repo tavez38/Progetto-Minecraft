@@ -42,6 +42,7 @@ namespace ProgMinecraft
             Console.WriteLine("--- PROVA LA LOGICA DI MINECRAFT ---");
             do
             {
+                eliminaItem();
                 stampaMenu();
                 Console.Write("inserisci la tua scelta: "); 
                 if(!int.TryParse(Console.ReadLine(),out scelta))
@@ -370,6 +371,10 @@ namespace ProgMinecraft
                 {
                     Console.Write($"{nomeMateriale[i]} {quantitaMateriale[i]} \t");
                 }
+                else
+                {
+                    Console.Write("[] \t");
+                }
             }
         }
         static void stampaInventory()
@@ -381,6 +386,9 @@ namespace ProgMinecraft
                     if (quantitaMatInv[i, j] != 0)
                     {
                         Console.Write($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]} \t");
+                    }
+                    else {
+                        Console.Write("[] \t");
                     }
                 }
                 Console.WriteLine("\n");
@@ -564,6 +572,19 @@ namespace ProgMinecraft
                 }
             }
             return -1;
+        }
+        static void eliminaItem()
+        {
+            for (int i = 0; i < RAW_INVENTARY; i++)
+            {
+                for (int j = 0; j < COLL_INVENTARY; j++)
+                {
+                    if (quantitaMatInv[i, j] == 0)
+                    {
+                        nomeMaterialeInventario[i, j] = null;
+                    }
+                }
+            }
         }
     } 
 }
