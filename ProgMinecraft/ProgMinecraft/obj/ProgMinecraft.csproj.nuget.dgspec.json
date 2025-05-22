@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj": {}
+    "C:\\Users\\gcaim\\OneDrive\\Desktop\\scuola\\informatica\\pentamestre\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj": {}
   },
   "projects": {
-    "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj": {
+    "C:\\Users\\gcaim\\OneDrive\\Desktop\\scuola\\informatica\\pentamestre\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
+        "projectUniqueName": "C:\\Users\\gcaim\\OneDrive\\Desktop\\scuola\\informatica\\pentamestre\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
         "projectName": "ProgMinecraft",
-        "projectPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
-        "packagesPath": "C:\\Users\\alunno\\.nuget\\packages\\",
-        "outputPath": "T:\\Tavecchia_Lorenzo\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\obj\\",
+        "projectPath": "C:\\Users\\gcaim\\OneDrive\\Desktop\\scuola\\informatica\\pentamestre\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\ProgMinecraft.csproj",
+        "packagesPath": "C:\\Users\\gcaim\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gcaim\\OneDrive\\Desktop\\scuola\\informatica\\pentamestre\\Progetto-Minecraft\\ProgMinecraft\\ProgMinecraft\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\alunno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gcaim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -60,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

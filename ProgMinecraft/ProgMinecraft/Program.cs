@@ -62,24 +62,31 @@ namespace ProgMinecraft
                         break;
                     case 2:
                         Console.Clear();
-                        int quantItem;
-                        Console.Write("Inserire il nome dell'item (se esso è composto da piu parole separarle con _, non inserire articoli e/o preposizioni e inserire il nome al singolare: ex. asse e non assi): ");
-                        nomeItem=Console.ReadLine();
-                        Console.Write("Inserire la quantita dell'item: ");
-                        while(!int.TryParse(Console.ReadLine(),out quantItem))
+                        if (isFull())
                         {
-                            Console.WriteLine("Errore, inserire una quantita numerica");
-                        }
-                        resetVetInd();
-                        bool res=addItem(nomeItem.ToUpper(),quantItem);
-                        if (res)
-                        {
-                            Console.WriteLine("Inventario aggiornato");
+                            Console.WriteLine("impossibile aggiungere un item, inventario pieno; se hai spazio nel quick inventory sposta gli item li e poi aggiungi nuovamente");
                         }
                         else
                         {
-                            Console.WriteLine("Errore nell'aggiunta");
-                        } 
+                            int quantItem;
+                            Console.Write("Inserire il nome dell'item (se esso è composto da piu parole separarle con _, non inserire articoli e/o preposizioni e inserire il nome al singolare: ex. asse e non assi): ");
+                            nomeItem = Console.ReadLine();
+                            Console.Write("Inserire la quantita dell'item: ");
+                            while (!int.TryParse(Console.ReadLine(), out quantItem))
+                            {
+                                Console.WriteLine("Errore, inserire una quantita numerica");
+                            }
+                            resetVetInd();
+                            bool res = addItem(nomeItem.ToUpper(), quantItem);
+                            if (res)
+                            {
+                                Console.WriteLine("Inventario aggiornato");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Errore nell'aggiunta");
+                            }
+                        }
                         break;
                     case 3:
                         int somma = 0;
@@ -585,6 +592,20 @@ namespace ProgMinecraft
                     }
                 }
             }
+        }
+        static bool isFull()
+        {
+            for (int i = 0; i < RAW_INVENTARY; i++)
+            {
+                for (int j = 0; j < COLL_INVENTARY; j++)
+                {
+                    if (nomeMaterialeInventario[i, j] == null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     } 
 }
