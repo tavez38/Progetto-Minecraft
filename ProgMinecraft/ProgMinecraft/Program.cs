@@ -21,21 +21,23 @@ namespace ProgMinecraft
         static int[,] quantitaMatInv = new int[RAW_INVENTARY, COLL_INVENTARY];
         static String[] possibiliMaterialiAvvio = { "TRONCO_LEGNO", "COBBLESTONE", "CARBONE", "CARNE_CRUDA", "PATATE", "CAROTE" };
         static bool[] statusMatGen = { false, false, false, false, false, false };
-        static int [] indiciRicerca= new int [54];
+        static int[] indiciRicerca = new int[54];
 
-        
+
         static void Main(string[] args)
         {
             int scelta;
             String nomeItem;
-            
+
             Random rand = new Random();
             int slotGen = 0;
-            while (slotGen < MAT_AVVIO) {
+            while (slotGen < MAT_AVVIO)
+            {
                 int matGen = rand.Next(0, 6);
                 int quantGen = rand.Next(1, 65);
                 bool res = genSlotInventory(matGen, quantGen, slotGen);
-                if (res) {
+                if (res)
+                {
                     slotGen++;
                 }
             }
@@ -44,8 +46,8 @@ namespace ProgMinecraft
             {
                 eliminaItem();
                 stampaMenu();
-                Console.Write("inserisci la tua scelta: "); 
-                if(!int.TryParse(Console.ReadLine(),out scelta))
+                Console.Write("inserisci la tua scelta: ");
+                if (!int.TryParse(Console.ReadLine(), out scelta))
                 {
                     break;
                 }
@@ -55,7 +57,7 @@ namespace ProgMinecraft
                         Console.Clear();
                         sortQuickInventory();
                         sortMatrix();
-                        Console.WriteLine("Inventario veloce \n"); 
+                        Console.WriteLine("Inventario veloce \n");
                         stampaQuickInventory();
                         Console.WriteLine("\nInventario");
                         stampaInventory();
@@ -94,8 +96,8 @@ namespace ProgMinecraft
                         Console.Write("Inserire il nome dell'item: ");
                         nomeItem = Console.ReadLine();
                         resetVetInd();
-                        int indiceQuickInv=searchQuickInv(nomeItem.ToUpper());
-                        cercaItemInventory(nomeItem.ToUpper(),0);
+                        int indiceQuickInv = searchQuickInv(nomeItem.ToUpper());
+                        cercaItemInventory(nomeItem.ToUpper(), 0);
                         if (indiceQuickInv != -1)
                         {
                             somma += quantitaMateriale[indiceQuickInv];
@@ -114,8 +116,74 @@ namespace ProgMinecraft
                         }
                         break;
                     case 4:
+                        int spostamento;
+                        int riga;
+                        int colonna;
+                        Console.WriteLine("1. sposta da inventario a barra veloce (l'item verra poi messo nel primo slot libero)");
+                        Console.WriteLine("2. sposta da barra veloce a inventario (l'item verra poi spostato in base alla quantita posseduta)");
+                        Console.WriteLine("qualsiasi tasto: esci");
+                        if (!int.TryParse(Console.ReadLine(), out spostamento) || spostamento < 1 || spostamento > 2)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            switch (spostamento)
+                            {
+                                case 1:
+                                    Console.WriteLine("inserisci la riga in cui si trova l'item");
+                                    if (!int.TryParse(Console.ReadLine(), out riga) || riga < 1 || riga > 3) {
+                                        Console.WriteLine("valore non valido, errore");
+                                        break;
+                                    }
+                                    riga--;
+                                    Console.WriteLine("inserisci la colonna in cui si trova l'item");
+                                    if (!int.TryParse(Console.ReadLine(), out colonna) || colonna < 1 || colonna > COLL_INVENTARY)
+                                    {
+                                        Console.WriteLine("valore non valido, errore");
+                                        break;
+                                    }
+                                    colonna--;
+                                    if (isNull(riga,colonna))
+                                    {
+                                        Console.WriteLine("impossibile spostare, l'item specificato e nullo");
+                                    }
+                                    else if (change(riga, colonna))
+                                    {
+                                        Console.WriteLine("operazione avvenuta con successo");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("errore nell'operazione");
+                                    }
+                                    break;
+                                case 2:
+                                    Console.WriteLine("inserisci la posizione in cui si trova l'item");
+                                    if (!int.TryParse(Console.ReadLine(), out colonna) || colonna < 1 || colonna > COLL_INVENTARY)
+                                    {
+                                        Console.WriteLine("valore non valido, errore");
+                                        break;
+                                    }
+                                    colonna--;
+                                    if (isNull(-1, colonna))
+                                    {
+                                        Console.WriteLine("impossibile spostare, l'item specificato e nullo");
+                                    }
+                                    else if (change(-1, colonna))
+                                    {
+                                        Console.WriteLine("operazione avvenuta con successo");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("errore nell'operazione");
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                    case 5:
                         Console.Clear();
-                        bool addInv=false;
+                        bool addInv = false;
                         int sceltaCraft;
                         String confCraft;
                         Console.WriteLine("Seleziona il craft che vuoi fare");
@@ -123,20 +191,20 @@ namespace ProgMinecraft
                         Console.WriteLine("2. Torcia");
                         Console.WriteLine("Qualsiasi tasto per annullare");
                         Console.WriteLine("Scegli il craft");
-                        if(!int.TryParse(Console.ReadLine(), out sceltaCraft) || sceltaCraft>=3 || sceltaCraft <= 0)
+                        if (!int.TryParse(Console.ReadLine(), out sceltaCraft) || sceltaCraft >= 3 || sceltaCraft <= 0)
                         {
                             break;
                         }
                         switch (sceltaCraft)
                         {
-                            
+
                             case 1:
                                 Console.Clear();
                                 resetVetInd();
                                 Console.WriteLine("Materiale occorente: 2x ASSI_LEGNO");
                                 cercaItemInventory("ASSE_LEGNO", 0);
-                                int indexAssi=searchQuickInv("ASSE_LEGNO");
-                                if (indiciRicerca[0] == -1 && indexAssi==-1)
+                                int indexAssi = searchQuickInv("ASSE_LEGNO");
+                                if (indiciRicerca[0] == -1 && indexAssi == -1)
                                 {
                                     Console.WriteLine("Al momento non hai i materiali necessari");
                                 }
@@ -147,12 +215,12 @@ namespace ProgMinecraft
                                     {
                                         sommaAssi += quantitaMateriale[indexAssi];
                                     }
-                                     sommaAssi+=calcSommaInv();
+                                    sommaAssi += calcSommaInv();
                                     Console.WriteLine($"Al momento possiedi {sommaAssi} ASSE_LEGNO");
-                                    if(sommaAssi>= NEED_ASSI)
+                                    if (sommaAssi >= NEED_ASSI)
                                     {
                                         Console.WriteLine("Quanti stick vuoi craftare?");
-                                        if(!int.TryParse(Console.ReadLine(),out int quant))
+                                        if (!int.TryParse(Console.ReadLine(), out int quant))
                                         {
                                             break;
                                         }
@@ -162,14 +230,14 @@ namespace ProgMinecraft
                                             break;
                                         }
                                         Console.WriteLine("Vuoi procedere con il craft? (S/qualsiasi tasto per annullare)");
-                                        confCraft=Console.ReadLine();
+                                        confCraft = Console.ReadLine();
                                         if (confCraft.ToUpper() == "S")
                                         {
                                             if (indexAssi != -1)
                                             {
                                                 svuotaQuickInv(indexAssi);
                                             }
-                                            addInv =craftStick(sommaAssi, quant);
+                                            addInv = craftStick(sommaAssi, quant);
                                             if (addInv)
                                             {
                                                 Console.WriteLine("craft eseguito; controlla l'inventario");
@@ -179,17 +247,17 @@ namespace ProgMinecraft
                                                 Console.WriteLine("craft eseguito; item non aggiunto all'inventario");
                                             }
                                         }
-                                        else 
+                                        else
                                         {
                                             Console.WriteLine("Uscita in corso...");
                                         }
-                                        
+
                                     }
                                     else
                                     {
                                         Console.WriteLine("Impossibile procedere con il craf, non possiedi abbastanza materiali");
                                     }
-                                    
+
                                 }
                                 break;
                             case 2:
@@ -206,10 +274,10 @@ namespace ProgMinecraft
                                     Console.WriteLine("Impossibile eseguire il craft");
                                 }
                                 else
-                                {  
+                                {
                                     if (indexStick != -1)
                                     {
-                                        sommaStick += quantitaMateriale[indexStick];    
+                                        sommaStick += quantitaMateriale[indexStick];
                                     }
                                     sommaStick += calcSommaInv();
                                     resetVetInd();
@@ -221,7 +289,7 @@ namespace ProgMinecraft
                                         Console.WriteLine("Impossibile eseguire il craft");
                                         break;
                                     }
-                                    else 
+                                    else
                                     {
                                         if (indexCarbone != -1)
                                         {
@@ -230,7 +298,7 @@ namespace ProgMinecraft
                                         sommaCarbone += calcSommaInv();
                                     }
                                     Console.WriteLine($"Al momento possiedi: \n{sommaStick} unita di STICK_LEGNO\n{sommaCarbone} unita di CARBONE");
-                                    if(sommaCarbone>NEED_CARBONE && sommaStick > NEED_STICK)
+                                    if (sommaCarbone > NEED_CARBONE && sommaStick > NEED_STICK)
                                     {
                                         Console.WriteLine("Inserire la quantita di torce da craftare: ");
                                         if (!int.TryParse(Console.ReadLine(), out int quantTorce))
@@ -238,7 +306,7 @@ namespace ProgMinecraft
                                             Console.WriteLine("Impossibile procedere, la quantita deve essere numerica");
                                             break;
                                         }
-                                        if(sommaStick < (NEED_STICK*quantTorce) && sommaCarbone < (NEED_CARBONE * quantTorce))
+                                        if (sommaStick < (NEED_STICK * quantTorce) && sommaCarbone < (NEED_CARBONE * quantTorce))
                                         {
                                             Console.WriteLine($"impossibile craftare {quantTorce} torce; materiali insufficienti");
                                             break;
@@ -278,7 +346,7 @@ namespace ProgMinecraft
                                     {
                                         Console.WriteLine("Impossibile eseguire il craft");
                                     }
-                                    
+
                                 }
                                 break;
                             default: break;
@@ -325,15 +393,15 @@ namespace ProgMinecraft
         }
         static bool craftStick(int sommaMax, int quant)
         {
-            int maxRimanenti = sommaMax - (quant*NEED_ASSI);
+            int maxRimanenti = sommaMax - (quant * NEED_ASSI);
             svuotaInvRicerca();
-            if (maxRimanenti > 0) 
+            if (maxRimanenti > 0)
             {
-                addItemNotStack(maxRimanenti, "ASSI_LEGNO"); 
+                addItemNotStack(maxRimanenti, "ASSI_LEGNO");
             }
             resetVetInd();
             return addItem("STICK_LEGNO", quant);
-             
+
         }
         static int calcSommaInv()
         {
@@ -351,12 +419,13 @@ namespace ProgMinecraft
         }
         static void stampaMenu()
         {
-            
+
             Console.WriteLine("SELEZIONA L'OPERAZIONE CHE VUOI FARE");
             Console.WriteLine("1. Visualizza il tuo inventario");
             Console.WriteLine("2. Aggiungi un item al tuo inventario");
             Console.WriteLine("3. Cerca un item nel tuo inventario");
-            Console.WriteLine("4. Crafta un oggetto");
+            Console.WriteLine("4. Sposta un item");
+            Console.WriteLine("5. Crafta un oggetto");
             Console.WriteLine("Qualsiasi tasto: Esci");
         }
         static bool genSlotInventory(int posMatGen, int quantMatGen, int posInventory)
@@ -365,7 +434,7 @@ namespace ProgMinecraft
             {
                 nomeMateriale[posInventory] = possibiliMaterialiAvvio[posMatGen];
                 quantitaMateriale[posInventory] = quantMatGen;
-                statusMatGen[posMatGen]=true;
+                statusMatGen[posMatGen] = true;
                 return true;
             }
             return false;
@@ -374,7 +443,7 @@ namespace ProgMinecraft
         {
             for (int i = 0; i < nomeMateriale.Length; i++)
             {
-                if (quantitaMateriale[i]!=0)
+                if (quantitaMateriale[i] != 0)
                 {
                     Console.Write($"{nomeMateriale[i]} {quantitaMateriale[i]} \t");
                 }
@@ -394,7 +463,8 @@ namespace ProgMinecraft
                     {
                         Console.Write($"{nomeMaterialeInventario[i, j]} {quantitaMatInv[i, j]} \t");
                     }
-                    else {
+                    else
+                    {
                         Console.Write("[] \t");
                     }
                 }
@@ -404,18 +474,18 @@ namespace ProgMinecraft
         static void cercaItemInventory(String nomeItem, int indVetInd)
         {
             bool sameIndexs;
-            bool addedIndex=false;
-            int i=0, j=0;
+            bool addedIndex = false;
+            int i = 0, j = 0;
             for (; i < RAW_INVENTARY && !addedIndex; i++)
             {
-                for(; j < COLL_INVENTARY; j++)
+                for (; j < COLL_INVENTARY; j++)
                 {
                     sameIndexs = false;
-                    for(int k=0; k<indiciRicerca.Length; k+=2)
+                    for (int k = 0; k < indiciRicerca.Length; k += 2)
                     {
                         if (i == indiciRicerca[k] && j == indiciRicerca[k + 1])
                         {
-                            sameIndexs=true;
+                            sameIndexs = true;
                             break;
                         }
                     }
@@ -426,18 +496,18 @@ namespace ProgMinecraft
                     else if (nomeMaterialeInventario[i, j] == nomeItem)
                     {
                         indiciRicerca[indVetInd] = i;
-                        indiciRicerca[indVetInd+1] = j;
-                        indVetInd +=2;
-                        addedIndex=true;
+                        indiciRicerca[indVetInd + 1] = j;
+                        indVetInd += 2;
+                        addedIndex = true;
                         break;
-                        
+
                     }
                 }
             }
-            if (addedIndex && !(j == 8 && i==3))
+            if (addedIndex && !(j == 8 && i == 3))
             {
-                cercaItemInventory(nomeItem, indVetInd);    
-            }  
+                cercaItemInventory(nomeItem, indVetInd);
+            }
         }
         static void resetVetInd()
         {
@@ -450,43 +520,44 @@ namespace ProgMinecraft
         {
             bool added = false;
             cercaItemInventory(nomeItem, 0);
-            if (indiciRicerca[0]==-1)
+            if (indiciRicerca[0] == -1)
             {
-               added = addItemNotStack(quantItem, nomeItem);
-                
+                added = addItemNotStack(quantItem, nomeItem);
+
             }
-            else  
-            {  
+            else
+            {
                 int somma = 0;
                 somma += quantItem;
-                for (int i = 0; i < indiciRicerca.Length; i+=2)
+                for (int i = 0; i < indiciRicerca.Length; i += 2)
                 {
-                    if (indiciRicerca[i] != -1) {
-                        int ind1=indiciRicerca[i];
-                        int ind2=indiciRicerca[i+1];
-                        somma = somma+ quantitaMatInv[ind1, ind2];
+                    if (indiciRicerca[i] != -1)
+                    {
+                        int ind1 = indiciRicerca[i];
+                        int ind2 = indiciRicerca[i + 1];
+                        somma = somma + quantitaMatInv[ind1, ind2];
                         quantitaMatInv[ind1, ind2] = 0;
                         nomeMaterialeInventario[ind1, ind2] = null;
                     }
                 }
-                added=addItemNotStack(somma, nomeItem);
-                                
+                added = addItemNotStack(somma, nomeItem);
+
             }
             return added;
         }
         static bool addItemNotStack(int somma, String nomeItem)
         {
             int numStack;
-            bool res=false;
+            bool res = false;
             numStack = (int)(somma / 64);
             for (int i = 0; i < numStack; i++)
             {
-                res=addItemFirstFreeSlot(nomeItem, 64);
+                res = addItemFirstFreeSlot(nomeItem, 64);
             }
             int quantRimanente = somma - (numStack * 64);
             if (quantRimanente > 0)
             {
-                res=addItemFirstFreeSlot(nomeItem, quantRimanente);
+                res = addItemFirstFreeSlot(nomeItem, quantRimanente);
             }
             return res;
         }
@@ -551,17 +622,19 @@ namespace ProgMinecraft
                         }
                     }
                 }
-            }while (scambi!=0);
+            } while (scambi != 0);
         }
         static void sortQuickInventory()
         {
-            for (int i = 0; i < nomeMateriale.Length - 1; i++) {
-                for (int j = 0; j < nomeMateriale.Length-1-i; j++) { 
+            for (int i = 0; i < nomeMateriale.Length - 1; i++)
+            {
+                for (int j = 0; j < nomeMateriale.Length - 1 - i; j++)
+                {
                     if (quantitaMateriale[j] < quantitaMateriale[j + 1])
                     {
                         int copia = quantitaMateriale[j];
-                        quantitaMateriale[j]=quantitaMateriale[j + 1];
-                        quantitaMateriale[j+1] = copia;
+                        quantitaMateriale[j] = quantitaMateriale[j + 1];
+                        quantitaMateriale[j + 1] = copia;
                         String copia1 = nomeMateriale[j];
                         nomeMateriale[j] = nomeMateriale[j + 1];
                         nomeMateriale[j + 1] = copia1;
@@ -607,6 +680,68 @@ namespace ProgMinecraft
             }
             return true;
         }
-    } 
+        static bool change(int riga, int colonna) //parametri --> dove si trova l'item al momento della chiamata
+        {
+            int quant;
+            String item;
+            bool res = false;
+            if (riga == -1)
+            { //spostamento da  barra veloce a inv
+                if (!isFull())
+                {
+                    quant = quantitaMateriale[colonna];
+                    item = nomeMateriale[colonna];
+                    quantitaMateriale[colonna] = 0;
+                    nomeMateriale[colonna] = null;
+                    addItemNotStack(quant, item);
+                    res = true;
+                }
+            }
+            else // spostamento da inv a veloce
+            {
+                int index = checkFirstSlotQuick();
+                if (index != -1)
+                {
+                    quant = quantitaMatInv[riga, colonna];
+                    item = nomeMaterialeInventario[riga, colonna];
+                    nomeMateriale[index] = item;
+                    quantitaMateriale[index] = quant;
+                    quantitaMatInv[riga, colonna] = 0;
+                    nomeMaterialeInventario[riga, colonna] = null;
+                    res = true;
+                }
+            }
+            return res;
+        }
+        static int checkFirstSlotQuick()
+        {
+            for (int i = 0; i < COLL_INVENTARY; i++)
+            {
+                if (nomeMateriale[i] == null)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        static bool isNull(int riga, int colonna)
+        {
+            bool res = false;
+            if (riga == -1)
+            {
+                if (nomeMateriale[colonna] == null)
+                {
+                    res = true;
+                }
+            }
+            else {
+                if (nomeMaterialeInventario[riga, colonna] == null)
+                {
+                    res = true;
+                }
+            }
+            return res;
+        } 
+    }
 }
 
