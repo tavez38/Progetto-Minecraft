@@ -119,9 +119,11 @@ namespace ProgMinecraft
                         int spostamento;
                         int riga;
                         int colonna;
-                        Console.WriteLine("1. sposta da inventario a barra veloce (l'item verra poi messo nel primo slot libero)");
-                        Console.WriteLine("2. sposta da barra veloce a inventario (l'item verra poi spostato in base alla quantita posseduta)");
+                        Console.WriteLine("ATTENZIONE: LE RIGHE DELL'INVENTARIO PARTONO DA 1 E SONO NUMERATE DALL'ALTO VERSO IL BASSO");
+                        Console.WriteLine("1. sposta da inventario a barra veloce");
+                        Console.WriteLine("2. sposta da barra veloce a inventario");
                         Console.WriteLine("qualsiasi tasto: esci");
+                        Console.WriteLine("AVVERTENZA: in entrambi i casi l'item verrà poi ordinato in base alla quantita posseduta");
                         if (!int.TryParse(Console.ReadLine(), out spostamento) || spostamento < 1 || spostamento > 2)
                         {
                             break;
@@ -132,7 +134,7 @@ namespace ProgMinecraft
                             {
                                 case 1:
                                     Console.WriteLine("inserisci la riga in cui si trova l'item");
-                                    if (!int.TryParse(Console.ReadLine(), out riga) || riga < 1 || riga > 3) {
+                                    if (!int.TryParse(Console.ReadLine(), out riga) || riga < 1 || riga > RAW_INVENTARY) {
                                         Console.WriteLine("valore non valido, errore");
                                         break;
                                     }
@@ -355,7 +357,7 @@ namespace ProgMinecraft
                     default:
                         break;
                 }
-            } while (scelta > 0 && scelta < 5);
+            } while (scelta > 0 && scelta < 6);
         }
         static void svuotaQuickInv(int index)
         {
@@ -549,12 +551,12 @@ namespace ProgMinecraft
         {
             int numStack;
             bool res = false;
-            numStack = (int)(somma / 64);
+            numStack = (int)(somma / MAX_MAT);
             for (int i = 0; i < numStack; i++)
             {
-                res = addItemFirstFreeSlot(nomeItem, 64);
+                res = addItemFirstFreeSlot(nomeItem, MAX_MAT);
             }
-            int quantRimanente = somma - (numStack * 64);
+            int quantRimanente = somma - (numStack * MAX_MAT);
             if (quantRimanente > 0)
             {
                 res = addItemFirstFreeSlot(nomeItem, quantRimanente);
